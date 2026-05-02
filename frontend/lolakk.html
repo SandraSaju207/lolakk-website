@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lolakk | Premium Jewellery</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body { 
+            font-family: 'Montserrat', sans-serif;
+            background: #0f0f0f;
+            color: #e5e5e5;
+            overflow-x: hidden;
+        }
+
+        .serif { font-family: 'Playfair Display', serif; }
+
+        /* GOLD TEXT & GLOW */
+        .gold-gradient {
+            background: linear-gradient(120deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-glow { box-shadow: 0 0 25px rgba(255,215,0,0.2); }
+
+        /* GLASSMORPHISM */
+        .glass {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* SHIMMER ANIMATION */
+        .shimmer-once { position: relative; overflow: hidden; }
+        .shimmer-once::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -150%;
+            width: 50%; height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-20deg);
+            animation: shimmerOnce 2.5s ease forwards;
+        }
+        @keyframes shimmerOnce {
+            0% { left: -150%; }
+            100% { left: 150%; }
+        }
+
+        /* DUAL NAVBAR LOGIC */
+        #categoryNav {
+            position: fixed;
+            top: 80px; 
+            width: 100%;
+            z-index: 40;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* STICKY JEWELRY SETS */
+        .jewel-set {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .necklace { width: 420px; position: relative; top: 10%; transition: transform 0.4s ease; }
+        .left-ear, .right-ear { position: absolute; width: 120px; top: 28%; }
+        .left-ear { left: 35%; transform: translate(-50%, -50%); }
+        .right-ear { right: 35%; transform: translate(50%, -50%); }
+
+        /* PARALLAX CARDS */
+        .parallax-card {
+            transform-style: preserve-3d;
+            transition: transform 0.25s ease, box-shadow 0.3s ease;
+            will-change: transform;
+        }
+        .parallax-card:hover { box-shadow: 0 30px 60px rgba(255,215,0,0.15); }
+        .parallax-inner { transform: translateZ(40px); }
+        .parallax-bg { transform: scale(1.1); }
+        
+        .float { animation: floatCard 6s ease-in-out infinite; }
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* DYNAMIC SHINE */
+        .shine {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,215,0,0.4), transparent);
+            filter: blur(50px);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            z-index: 20;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav id="navbar" class="fixed top-0 w-full h-[80px] z-50 glass px-6 flex justify-between items-center transition-transform duration-300">
+    <a href="#home" class="flex items-center">
+        <img src="hero.png" class="h-14 w-18 hidden md:block" alt="Logo Icon">
+    </a>
+    
+    <div class="hidden md:flex space-x-10 text-xs uppercase font-semibold tracking-widest">
+        <a href="#home" class="hover:text-amber-400 transition">Home</a>
+        <a href="#jewelry" class="hover:text-amber-400 transition">Jewelry</a>
+        <a href="#collection" class="hover:text-amber-400 transition">Collection</a>
+        <a href="#contact" class="hover:text-amber-400 transition">Visit Us</a>
+        <a href="/kids" class="hover:text-amber-400 transition">Kids</a>
+
+    </div>
+
+    <a href="https://wa.me/91XXXXXXXXXX" class="bg-amber-600 text-black px-5 py-2 text-xs font-bold gold-glow hover:bg-amber-500 transition">
+        Book Appointment
+    </a>
+</nav>
+
+<div id="categoryNav" class="bg-zinc-900/90 border-b border-white/5 px-6 py-3 flex justify-center space-x-8 text-[10px] uppercase tracking-[0.3em] font-medium text-amber-500/80">
+    <a href="/Rings" class="hover:text-white transition-colors duration-300">Rings</a>
+    <span class="text-white/20">|</span>
+    <a href="/Earrings" class="hover:text-white transition-colors duration-300">Earrings</a>
+    <span class="text-white/20">|</span>
+    <a href="/Bracelets & bangles" class="hover:text-white transition-colors duration-300">Bracelets & Bangles</a>
+    <span class="text-white/20">|</span>
+    <a href="/Solitaries" class="hover:text-white transition-colors duration-300">Solitaries</a>
+    <span class="text-white/20">|</span>
+    <a href="/Mangalsutras" class="hover:text-white transition-colors duration-300">Mangalsutras</a>
+    <span class="text-white/20">|</span>
+    <a href="/Necklaces & Pendants" class="hover:text-white transition-colors duration-300">Necklaces & Pendants</a>
+    <span class="text-white/20">|</span>
+    <a href="/Gifting" class="hover:text-white transition-colors duration-300">Gifting</a>
+    <span class="text-white/20">|</span>
+    <a href="/More jewellery" class="hover:text-white transition-colors duration-300">More jewellery</a>
+    <span class="text-white/20">|</span>
+    <a href="/Trending" class="hover:text-white transition-colors duration-300">Trending</a>
+</div>
+
+<section id="home" class="relative h-screen flex items-center justify-center text-center">
+    <div class="absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&q=80&w=2000"
+             class="w-full h-full object-cover opacity-30">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black"></div>
+    </div>
+
+    <div class="relative z-10 px-4">
+        <span class="text-amber-500 uppercase tracking-[0.5em] text-[10px] mb-4 block">Est. 2026 • Kerala</span>
+        <h1 class="text-6xl md:text-8xl serif mb-6 gold-gradient shimmer-once">
+            Lolakk <span class="italic text-gray-500 font-light text-4xl md:text-6xl block md:inline">by Athira</span>
+        </h1>
+        <p class="max-w-xl mx-auto text-gray-400 mb-8 text-sm tracking-wide">
+            Redefining traditional elegance for the modern soul. Pure gold, timeless craftsmanship.
+        </p>
+        <div class="flex flex-col md:flex-row justify-center gap-4">
+            <a href="#jewelry" class="border border-amber-500/50 text-amber-500 px-8 py-3 hover:bg-amber-500 hover:text-black uppercase text-[10px] tracking-widest transition gold-glow">
+                Explore Collection
+            </a>
+            <a href="#collection" class="border border-white/20 text-white px-8 py-3 hover:bg-white hover:text-black uppercase text-[10px] tracking-widest transition">
+                View Catalog
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="jewelry" class="relative h-[300vh]">
+    <div class="sticky top-0 h-screen overflow-hidden">
+        <img src="model.jpeg" class="absolute w-full h-full object-cover grayscale-[30%] opacity-60">
+        <div class="absolute inset-0 bg-black/20"></div>
+        
+        <div class="jewel-set" id="set1">
+            <img src="jewel.png" class="necklace">
+            
+            <img src="earring1.png" class="earring right-ear">
+        </div>
+
+        <div class="jewel-set" id="set2">
+            <img src="jewel.png" class="necklace">
+            
+            <img src="earring2.png" class="earring right-ear">
+        </div>
+
+        <div class="jewel-set" id="set3">
+            <img src="jewel.png" class="necklace">
+            <img src="earring3.png" class="earring right-ear">
+        </div>
+
+        <div class="absolute inset-0 flex items-end justify-center pb-20 pointer-events-none">
+            <p class="serif text-white/30 italic tracking-widest text-sm uppercase">Timeless Artistry</p>
+        </div>
+    </div>
+</section>
+
+<section id="collection" class="py-24 px-6 max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+        <h2 class="text-4xl serif mb-2">Curated Highlights</h2>
+        <div class="w-12 h-1 bg-amber-600 mx-auto"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div class="parallax-card float group relative aspect-[3/4] overflow-hidden rounded-lg glass">
+            <div class="parallax-bg h-full w-full">
+                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-700">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent"></div>
+            <div class="parallax-inner absolute bottom-6 left-6">
+                <h3 class="serif text-xl">Antique Gold</h3>
+                <p class="text-amber-500 text-[10px] uppercase tracking-widest mt-1">Kerala Heritage</p>
+            </div>
+        </div>
+        <div class="parallax-card float group relative aspect-[3/4] overflow-hidden rounded-lg glass" style="animation-delay: 1s;">
+            <div class="parallax-bg h-full w-full">
+                <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-700">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent"></div>
+            <div class="parallax-inner absolute bottom-6 left-6">
+                <h3 class="serif text-xl">Temple Jewelry</h3>
+                <p class="text-amber-500 text-[10px] uppercase tracking-widest mt-1">22K Certified</p>
+            </div>
+        </div>
+        <div class="parallax-card float group relative aspect-[3/4] overflow-hidden rounded-lg glass" style="animation-delay: 2s;">
+            <div class="parallax-bg h-full w-full">
+                <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-700">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent"></div>
+            <div class="parallax-inner absolute bottom-6 left-6">
+                <h3 class="serif text-xl">Modern Emerald</h3>
+                <p class="text-amber-500 text-[10px] uppercase tracking-widest mt-1">Luxury Edition</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- START INSTAGRAM FEEDBACK SECTION -->
+<section id="feedback" class="py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
+    <div class="text-center mb-16">
+        <span class="text-amber-500 uppercase tracking-[0.5em] text-[10px] mb-2 block">As seen on Instagram</span>
+        <h2 class="text-4xl serif mb-2 gold-gradient">The #LolakkStyle</h2>
+        <p class="text-gray-500 text-sm italic">Join our community of elegance</p>
+    </div>
+
+    <!-- Bento Grid with Video Integration -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[250px]">
+        
+        <!-- INSTAGRAM REEL / VIDEO SLOT (Tall) -->
+        <div class="parallax-card relative row-span-2 col-span-2 md:col-span-1 overflow-hidden rounded-2xl glass group border border-amber-500/20">
+            <!-- Replace the URL in 'src' with your actual Instagram Reel embed URL -->
+            <iframe 
+                class="w-full h-full opacity-80 group-hover:opacity-100 transition duration-500"
+                src="https://www.instagram.com/reels/DUat7frgdq8/?igsh=dHVuZzM1amo3MjUx/embed" 
+                frameborder="0" 
+                scrolling="no" 
+                allowtransparency="true">
+            </iframe>
+            <div class="absolute top-4 right-4 pointer-events-none">
+                <svg class="w-6 h-6 text-amber-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.058-1.69-.072-4.949-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </div>
+        </div>
+
+        <!-- IMAGE SLOT (Small) -->
+        <div class="parallax-card relative overflow-hidden rounded-2xl glass group">
+            <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition duration-1000">
+        </div>
+
+        <!-- IMAGE SLOT (Wide) -->
+        <div class="parallax-card relative col-span-2 overflow-hidden rounded-2xl glass group">
+            <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition duration-1000">
+            <div class="absolute bottom-4 left-4">
+                <p class="text-amber-500 text-[10px] uppercase font-bold tracking-widest">#MyLolakkStory</p>
+            </div>
+        </div>
+
+        <!-- IMAGE SLOT (Tall) -->
+        <div class="parallax-card relative row-span-2 overflow-hidden rounded-2xl glass group">
+            <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition duration-1000">
+        </div>
+
+        <!-- IMAGE SLOT (Regular) -->
+        <div class="parallax-card relative overflow-hidden rounded-2xl glass group">
+            <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition duration-1000">
+        </div>
+
+        <!-- IMAGE SLOT (Regular) -->
+        <div class="parallax-card relative overflow-hidden rounded-2xl glass group">
+            <img src="https://images.unsplash.com/photo-1602751584552-8ba73aad10e1" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition duration-1000">
+        </div>
+
+    </div>
+</section>
+
+<footer id="contact" class="glass py-20 px-6 text-center">
+    <h2 class="serif text-4xl mb-6">Visit Our Boutique</h2>
+    <p class="text-gray-500 mb-10 max-w-md mx-auto">
+        Experience the artistry in person. Open Monday to Saturday, 10 AM — 8 PM.
+    </p>
+    <div class="flex justify-center space-x-8">
+        <a href="#" class="text-xs uppercase hover:text-amber-400 transition">Instagram</a>
+        <a href="#" class="text-xs uppercase hover:text-amber-400 transition">Directions</a>
+        <a href="#" class="text-xs uppercase hover:text-amber-400 transition">WhatsApp</a>
+    </div>
+    <div class="mt-10 text-xs text-gray-600">
+        © 2026 Lolakk Fine Jewelry • Kerala, India
+    </div>
+</footer>
+
+<button id="scrollTopBtn"
+class="fixed bottom-6 left-1/2 -translate-x-1/2 glass text-amber-400 px-6 py-3 rounded-full gold-glow opacity-0 pointer-events-none transition-all z-50">
+    ↑ Top
+</button>
+
+<script>
+    const navbar = document.getElementById("navbar");
+    const categoryNav = document.getElementById("categoryNav");
+    const sets = document.querySelectorAll(".jewel-set");
+    const section = document.getElementById("jewelry");
+    const btn = document.getElementById("scrollTopBtn");
+
+    /* 1. DUAL NAVBAR & SCROLL TOP LOGIC */
+    let lastScroll = 0;
+    window.addEventListener("scroll", () => {
+        const current = window.pageYOffset;
+
+        // Navbar Hide/Show
+        if (current > lastScroll && current > 100) {
+            navbar.style.transform = "translateY(-100%)";
+            categoryNav.style.top = "0px";
+            categoryNav.style.backgroundColor = "rgba(15, 15, 15, 0.95)";
+        } else {
+            navbar.style.transform = "translateY(0)";
+            categoryNav.style.top = "80px";
+            categoryNav.style.backgroundColor = "rgba(24, 24, 27, 0.9)";
+        }
+
+        // Scroll Top Button Visibility
+        if (current > 600) {
+            btn.classList.remove("opacity-0","pointer-events-none");
+            btn.classList.add("opacity-100");
+        } else {
+            btn.classList.add("opacity-0","pointer-events-none");
+            btn.classList.remove("opacity-100");
+        }
+        
+        lastScroll = current;
+
+        /* 2. JEWELRY CROSSFADE & SHINE LOGIC */
+        const rect = section.getBoundingClientRect();
+        let progress = -rect.top / (section.offsetHeight - window.innerHeight);
+        progress = Math.max(0, Math.min(progress, 1));
+
+        const total = sets.length;
+        let scaled = progress * (total - 1);
+
+        sets.forEach((set, index) => {
+            const diff = scaled - index;
+            const opacity = 1 - Math.min(Math.abs(diff), 1);
+            set.style.opacity = opacity;
+
+            // Handle Shine visibility (from v2)
+            if (opacity > 0.5) {
+                shine.style.opacity = 0.6;
+                shine.style.left = "50%";
+                shine.style.top = "50%";
+                shine.style.transform = "translate(-50%, -50%)";
+            }
+
+            const items = set.querySelectorAll('img');
+            items.forEach(img => {
+                const scale = 0.9 + (opacity * 0.1);
+                const lift = 15 - (opacity * 15);
+                if(img.classList.contains('necklace')) {
+                    img.style.transform = `scale(${scale}) translateY(${lift}px)`;
+                }
+            });
+        });
+    });
+
+    btn.onclick = () => window.scrollTo({top:0, behavior:"smooth"});
+
+    /* 3. DYNAMIC SHINE ELEMENT */
+    const shine = document.createElement("div");
+    shine.classList.add("shine");
+    document.body.appendChild(shine);
+
+    /* 4. PARALLAX CARD TILT (Merged Logic) */
+    document.querySelectorAll('.parallax-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Rotation calculation from v2 (more responsive)
+            const rX = -(y - rect.height/2) / 20;
+            const rY = (x - rect.width/2) / 20;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rX}deg) rotateY(${rY}deg) scale(1.03)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1000px) rotateY(0) rotateX(0) scale(1)`;
+        });
+    });
+</script>
+
+</body>
+</html>
